@@ -202,7 +202,7 @@ def mainscreen():
     root.mainloop()
     
     
-def lol():
+def activation():
     time.sleep(2)
     print("help")
     mainscreen()
