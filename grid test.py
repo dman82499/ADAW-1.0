@@ -2,7 +2,7 @@ from tkinter import *
 import random
 import sys
 import os
-import winsound
+from pygame import mixer
 import time
 import subprocess
 
@@ -101,6 +101,8 @@ def resizescreen():
         adjustwindow.config(text = "Fullsize")
     print ("what")    
     print (p)
+    #a temporary fix for now:
+
 
 def filename():
     global file_path
@@ -109,14 +111,15 @@ def filename():
     ju.config(text = "Current Directory:    "+ str(file_path))
 
 def mainscreen():
-    root2.destroy()
     global root
     global adjustwindow
     global ju
     root = Tk()
     root.title ("Autonomous Digital Audio Workstation (ADAW)")
     root.attributes("-fullscreen", True)
+    root.configure(bg = "lightblue")
     frame = Frame(root)
+    frame.configure(width = root.winfo_screenwidth(), height = root.winfo_screenheight())
     frame.configure(bg = "lightblue")
     frame.grid()
     Welcome = Label(frame, text = "        Autonomous MIDI Workstation (ADAW)         ",bg = "lightblue")
@@ -207,18 +210,33 @@ def activation():
     print("help")
     mainscreen()
 
-root2 = Tk()
-root2.attributes("-fullscreen", False)
-root2.title ("Autonomous Digital Audio Workstation (ADAW)")
-frame2 = Frame(root2)
-frame2.configure(bg = "lightblue")
-frame2.pack()
+def loadingscreen():
+    #Create the loading screen for the application
+    mixer.init()
+    mixer.music.load("D:\peace.mp3")
+    mixer.music.play()
+    global root
+    root = Tk()
+    root.attributes("-fullscreen", False)
+    root.title("Cquential Launcher")
+    root.attributes("-fullscreen", True)
+    root.configure(bg="lightblue")
+    frame2 = Frame(root)
+    frame2.configure(bg="lightblue")
+    frame2.pack()
 
-Welcome = Label(frame2, text = "         Autonomous MIDI Workstation (ADAW)           ",bg = "lightblue")
-Welcome.config(font=("Caligraphy", 23))
-Welcome.pack(pady=20)
+    Welcome = Label(frame2, text="         Autonomous MIDI Workstation (ADAW)           ")
+    Welcome.config(font=("Caligraphy", 44), bg = "lightblue")
+    Welcome.pack()
 
-load = Label(frame2, text = "loading...", bg = "lightblue")
-load.pack(pady=100, fill=X)
+    load = Label(frame2, text="loading...", bg="lightblue")
+    load.pack()
+    root.update()
+    frame2.forget()
+    time.sleep(2)
+    #in the future I think you can use
 
-mainscreen()
+    mainscreen()
+
+loadingscreen()
+
